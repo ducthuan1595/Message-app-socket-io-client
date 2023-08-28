@@ -15,7 +15,23 @@ const FormPage = () => {
 
   const handleInputFile = (e) => {
     const file = e.target.files[0];
-    setPic(file);
+    if (file) {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "message-talk");
+      data.append("cloud_name", "dvlbv6l2k");
+      fetch("https://api.cloudinary.com/v1_1/dvlbv6l2k/image/upload", {
+        method: "POST",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPic(data.url.toString());
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -42,15 +58,24 @@ const FormPage = () => {
     } else {
       if (name && email && password) {
         try {
-          const formData = new FormData();
-          formData.append("name", name);
-          formData.append("email", email);
-          formData.append("password", password);
-          formData.append("pic", pic);
+          // const formData = new FormData();
+          // formData.append("name", name);
+          // formData.append("email", email);
+          // formData.append("password", password);
+          // formData.append("pic", pic);
+          const value = {
+            name,
+            email,
+            password,
+            pic,
+          };
 
-          const res = await request.signup(formData);
+          const res = await request.signup(value);
           if (res.data.message === "ok") {
             setErrorMessage("");
+            setIsLogin(true);
+            setEmail("");
+            setPassword("");
             navigate("/login");
           }
         } catch (err) {
@@ -64,7 +89,7 @@ const FormPage = () => {
   };
 
   return (
-    <div className="md:table mt-[200px] mx-auto">
+    <div className="md:table mt-[150px] mx-auto">
       <div className="flex flex-col justify-center items-center py-4 px-2 md:p-4 shadow-md rounded-md">
         <h1 className="text-2xl md:text-4xl md:px-20">Talk - Together</h1>
       </div>
