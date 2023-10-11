@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { request } from "../service";
+import { ChatState } from "../store/ChatProvider";
 
 const FormPage = () => {
   const navigate = useNavigate();
+  const { setUser, setToken } = ChatState();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,8 +46,12 @@ const FormPage = () => {
             password,
           };
           const res = await request.login(value);
-          console.log(res.response);
+          console.log(res);
           if (res.data.message === "ok") {
+            setUser(res.data.data);
+            setToken(res.data.token);
+            localStorage.setItem("user-chat", JSON.stringify(res.data.data));
+            localStorage.setItem("token-chat", JSON.stringify(res.data.token));
             setErrorMessage("");
             navigate("/");
           }
@@ -53,16 +59,11 @@ const FormPage = () => {
           setErrorMessage(err.response.data.message);
         }
       } else {
-        setErrorMessage("Please, enter enough information");
+        // setErrorMessage("Please, enter enough information");
       }
     } else {
       if (name && email && password) {
         try {
-          // const formData = new FormData();
-          // formData.append("name", name);
-          // formData.append("email", email);
-          // formData.append("password", password);
-          // formData.append("pic", pic);
           const value = {
             name,
             email,
@@ -74,6 +75,7 @@ const FormPage = () => {
           if (res.data.message === "ok") {
             setErrorMessage("");
             setIsLogin(true);
+            setName("");
             setEmail("");
             setPassword("");
             navigate("/login");
@@ -83,7 +85,7 @@ const FormPage = () => {
           setErrorMessage(err.response.data.message);
         }
       } else {
-        setErrorMessage("Please, enter enough information");
+        // setErrorMessage("Please, enter enough information");
       }
     }
   };
@@ -98,7 +100,7 @@ const FormPage = () => {
         <div className="m-2">
           <div className="flex justify-between items-center py-3 mb-6">
             <button
-              className="px-20 p-2 rounded-full font-medium"
+              className="py-2 px-16 rounded-xl font-medium"
               style={{
                 color: `${isLogin ? "white" : "#333"}`,
                 backgroundColor: `${isLogin ? "#7dd3fc" : "#fff"}`,
@@ -111,7 +113,7 @@ const FormPage = () => {
               Login
             </button>
             <button
-              className="px-20 p-2 rounded-full font-medium"
+              className="px-16 py-2 rounded-xl font-medium"
               onClick={() => {
                 setIsLogin(false);
                 navigate("/signup");

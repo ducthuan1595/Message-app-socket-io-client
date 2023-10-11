@@ -11,4 +11,15 @@ export const request = {
   signup: (...data) => {
     return axios.post(`${url}/signup`, ...data);
   },
+
+  searchUser: (key, token) => {
+    return axios.get(`${url}/search-user?key=${key}`, {
+      validateStatus: (status) => {
+        return status < 500;
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
 };

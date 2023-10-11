@@ -1,5 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Lato:ital,wght@0,300;1,300;1,400;1,700&family=Poppins:wght@300;400;600;700&family=Roboto:wght@100;300;400;500&family=Work+Sans:wght@300;400;500;600&display=swap');
 
 .App {
-  min-height: 100vh;
+  min-height      : 100vh;
+  background-color: #f6f6f6;
+}
+
+.after-content::before {
+  content            : "";
+  position           : absolute;
+  /* background-color: red; */
+  height             : 20px;
+  width              : 40px;
+  top                : 20px;
+  right              : 0;
+}
+
+.box-shadow {
+  box-shadow: 0 2px 4px 0px #e6e6e6;
+  z-index   : 10;
+}
+
+.transform-search {
+  transform-origin: 20% top;
 }
