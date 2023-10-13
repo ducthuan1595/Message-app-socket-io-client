@@ -3,7 +3,7 @@ import React from "react";
 const ListUser = ({ user, handleClick }) => {
   return (
     <div
-      class="flex items-center gap-4 p-2 mx-2 hover:bg-slate-300 rounded-md box-shadow cursor-pointer"
+      class="flex items-center w-full gap-4 p-2 mx-2 hover:bg-slate-300 rounded-md box-shadow cursor-pointer"
       onClick={handleClick}
     >
       <div class="rounded-full">

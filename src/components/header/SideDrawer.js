@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { ChatState } from "../store/ChatProvider";
+import { ChatState } from "../../store/ChatProvider";
 import { useNavigate } from "react-router-dom";
-import { ProfileModal } from "./ProfileModal";
+import { ProfileModal } from "../slides/ProfileModal";
 import { SearchUserModal } from "./SearchUserModal";
 
 const SideDrawer = () => {

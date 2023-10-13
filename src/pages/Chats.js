@@ -1,26 +1,16 @@
 import { useEffect, useState } from "react";
 import { ChatState } from "../store/ChatProvider";
-import SideDrawer from "../components/SideDrawer";
+import SideDrawer from "../components/header/SideDrawer";
+import MyChat from "../components/MyChat";
 import { request } from "../service";
 
 const ChatsPage = () => {
-  const { user } = ChatState();
-  const [chats, setChats] = useState([]);
-  // const fetchChats = async () => {
-  //   const { data } = await request.chats();
-  //   console.log(data);
-  //   if (data) {
-  //     setChats(data.data.chats);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchChats();
-  // }, []);
+  const { user, setChat } = ChatState();
 
   return (
     <div className="relative">
       <SideDrawer />
+      <MyChat />
     </div>
   );
 };

@@ -23,3 +23,9 @@
 .transform-search {
   transform-origin: 20% top;
 }
+
+.transform-translate {
+  left     : 50%;
+  right    : 50%;
+  transform: translate(-50%);
+}

@@ -1,4 +1,6 @@
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import HomePage from "./pages/Home";
 import ChatsPage from "./pages/Chats";
@@ -14,6 +16,8 @@ function App() {
         <Route path="/signup" element={<FormPage />} />
         <Route path="/chat" element={<ChatsPage />} />
       </Routes>
+
+      <ToastContainer />
     </div>
   );
 }

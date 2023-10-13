@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-import { request } from "../service";
-import ListUser from "./ListUser";
-import { ChatState } from "../store/ChatProvider";
+import { request } from "../../service";
+import ListUser from "../ListUser";
+import { ChatState } from "../../store/ChatProvider";
 
 export const SearchUserModal = ({ setOpen }) => {
-  const { token } = ChatState();
+  const { token, setChat } = ChatState();
 
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -16,7 +16,6 @@ export const SearchUserModal = ({ setOpen }) => {
       if (search.trim()) {
         setIsLoading(true);
         const { data } = await request.searchUser(search.trim(), token);
-        console.log(data);
         if (data.message === "ok") {
           setSearchResult(data.data);
           setIsLoading(false);
@@ -28,8 +27,18 @@ export const SearchUserModal = ({ setOpen }) => {
     }
   };
 
-  const handleClickUser = (userId) => {
-    console.log(userId);
+  const handleClickUser = async (userId) => {
+    try {
+      if (token) {
+        const { data } = await request.createChat({ userId }, token);
+        if (data.message === "ok") {
+          setChat(data.data);
+          setOpen(false);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const loadingContent = () => {
@@ -45,7 +54,7 @@ export const SearchUserModal = ({ setOpen }) => {
   };
 
   return (
-    <div className="absolute w-[100wh] h-full">
+    <div className="absolute w-[100wh] h-full bottom-0">
       <div className="bg-white left-0 h-[100vh] px-2  w-[300px] box-shadow transform-search">
         <div
           className="border-b-[1px] border-[#dddddd]"
@@ -69,7 +78,7 @@ export const SearchUserModal = ({ setOpen }) => {
             Go
           </button>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 p-2 items-center">
           {!isLoading ? (
             searchResult &&
             searchResult.map((user) => {
