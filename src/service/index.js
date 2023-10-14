@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://localhost:5000";
+export const url = "http://localhost:5000";
 
 export const request = {
   fetchChats: (token) => {
@@ -38,6 +38,56 @@ export const request = {
   },
   createGroupChat: (value, token) => {
     return axios.post(`${url}/create-group-chat`, value, {
+      validateStatus: (status) => {
+        return status < 500;
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
+  updateGroupChat: (value, token) => {
+    return axios.post(`${url}/update-user-group-chat`, value, {
+      validateStatus: (status) => {
+        return status < 500;
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
+  renameGroupChat: (value, token) => {
+    return axios.put(`${url}/rename-group-chat`, value, {
+      validateStatus: (status) => {
+        return status < 500;
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
+  leaveGroupChat: (value, token) => {
+    return axios.put(`${url}/leave-user-group-chat`, value, {
+      validateStatus: (status) => {
+        return status < 500;
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
+  sendMessage: (value, token) => {
+    return axios.post(`${url}/sent-message`, value, {
+      validateStatus: (status) => {
+        return status < 500;
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
+  getMessage: (chatId, token) => {
+    return axios.get(`${url}/get-message?chatId=${chatId}`, {
       validateStatus: (status) => {
         return status < 500;
       },

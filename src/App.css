@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Lato:ital,wght@0,300;1,300;1,400;1,700&family=Poppins:wght@300;400;600;700&family=Roboto:wght@100;300;400;500&family=Work+Sans:wght@300;400;500;600&display=swap');
 
+body::-webkit-scrollbar {
+  width: none;
+  /* For Chrome, Safari, and Opera */
+}
+
 .App {
   min-height      : 100vh;
   background-color: #f6f6f6;
@@ -28,4 +33,22 @@
   left     : 50%;
   right    : 50%;
   transform: translate(-50%);
+}
+
+.scrollbar {
+  overflow-y: scroll;
+}
+
+.scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.after-bridge {
+  position    : absolute;
+  content     : '';
+  border-style: solid;
+  border-width: 20px 27px;
+  border-color: transparent transparent white transparent;
+  right       : 60px;
+  top         : 0;
 }

@@ -3,17 +3,20 @@ import React, { useState, useEffect } from "react";
 import { request } from "../service";
 import { ChatState } from "../store/ChatProvider";
 import ListUser from "./ListUser";
-import CreateGroupChat from "./slides/CreateGroupChat";
+import ShowChatsModal from "./slides/ShowChatsModal";
 
 const MyChat = () => {
-  const { chat } = ChatState();
+  const { chat, setOnChat } = ChatState();
 
   const [openCreateGroup, setOpenCreateGroup] = useState(false);
 
-  console.log({ chat });
+  const handleChat = (chat) => {
+    setOnChat(chat);
+  };
+
   return (
     <>
-      <div className="bg-white p-2 h-[90vh] w-[400px] m-2 rounded-md">
+      <div className="bg-white p-2 h-[89vh] w-[400px] m-2 rounded-md">
         <div className="flex items-center justify-between p-2 mb-2">
           <h1 className="text-[24px] font-normal">My Chats</h1>
 
@@ -32,6 +35,7 @@ const MyChat = () => {
                 <div
                   key={c._id}
                   className="bg-slate-300 p-2 my-2 rounded-md hover:text-white hover:bg-green-600 cursor-pointer"
+                  onClick={() => handleChat(c)}
                 >
                   <div>{c.chatName}</div>
                 </div>
@@ -40,7 +44,7 @@ const MyChat = () => {
         </div>
       </div>
       {openCreateGroup && (
-        <CreateGroupChat setOpenCreateGroup={setOpenCreateGroup} />
+        <ShowChatsModal setOpen={setOpenCreateGroup} isCreateChat={true} />
       )}
     </>
   );

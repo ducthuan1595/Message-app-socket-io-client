@@ -3,9 +3,11 @@ import { ChatState } from "../../store/ChatProvider";
 import { useNavigate } from "react-router-dom";
 import { ProfileModal } from "../slides/ProfileModal";
 import { SearchUserModal } from "./SearchUserModal";
+import { getSender } from "../../config/messageBox";
 
 const SideDrawer = () => {
-  const { user, setUser, setToken } = ChatState();
+  const { user, setUser, setToken, setOnChat, notification, setNotification } =
+    ChatState();
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
@@ -34,7 +36,40 @@ const SideDrawer = () => {
       </button>
       <h2 className="font-semibold">TALK WITH ME</h2>
       <div className="flex items-center px-4 py-3 gap-4">
-        <i className="fas fa-bell"></i>
+        <div className="group after-bridge relative">
+          <i className="fas fa-bell cursor-pointer text-[19px] relative"></i>
+          {notification.length > 0 && (
+            <span className="absolute top-[-13px] right-[-15px] bg-red-400 py-[2px] px-[8px] rounded-full text-white text-[12px]">
+              {notification.length}
+            </span>
+          )}
+          <div className="group-hover:block hidden w-[300px] absolute top-[40px] right-[-5px] box-shadow rounded-md bg-white">
+            {notification.length ? (
+              notification.map((n) => {
+                return (
+                  <div
+                    key={n._id}
+                    onClick={() => {
+                      setOnChat(n.chatId);
+                      setNotification(
+                        notification.filter((noti) => noti._id !== n._id)
+                      );
+                    }}
+                    className="cursor-pointer hover:bg-slate-300 p-2 rounded-md"
+                  >
+                    {n.chatId.isGroupChat
+                      ? `New message in ${n.chatId.chatName}`
+                      : `New message from ${getSender(user, n.chatId.users)}`}
+                  </div>
+                );
+              })
+            ) : (
+              <div className="hover:bg-slate-300 p-2">
+                Not found notification
+              </div>
+            )}
+          </div>
+        </div>
         <div className="flex gap-1 after-content cursor-pointer relative group">
           <img
             src={user.pic}

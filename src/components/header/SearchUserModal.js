@@ -32,7 +32,7 @@ export const SearchUserModal = ({ setOpen }) => {
       if (token) {
         const { data } = await request.createChat({ userId }, token);
         if (data.message === "ok") {
-          setChat(data.data);
+          setChat((state) => [...state, data.data]);
           setOpen(false);
         }
       }
@@ -43,11 +43,11 @@ export const SearchUserModal = ({ setOpen }) => {
 
   const loadingContent = () => {
     return (
-      <div class="flex items-center gap-4">
-        <div class="rounded-full bg-slate-300 h-10 w-10"></div>
+      <div className="flex items-center gap-4">
+        <div className="rounded-full bg-slate-300 h-10 w-10"></div>
         <div className="flex flex-col gap-2">
-          <div class="h-4 w-32 bg-slate-300 rounded"></div>
-          <div class="h-4 w-44 bg-slate-300 rounded"></div>
+          <div className="h-4 w-32 bg-slate-300 rounded"></div>
+          <div className="h-4 w-44 bg-slate-300 rounded"></div>
         </div>
       </div>
     );
