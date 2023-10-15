@@ -10,7 +10,6 @@ const ChatsPage = () => {
 
   const fetchChatApi = async () => {
     const { data } = await request.fetchChats(token);
-    console.log("chat", data);
     if (data.message === "ok") {
       setChat(data.data);
     }
