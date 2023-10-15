@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ChatState } from "../store/ChatProvider";
 import ShowChatsModal from "./slides/ShowChatsModal";
+import { ProfileModal } from "./slides/ProfileModal";
 import SendMessage from "./SendMessage";
 import BodyBoxChat from "./BodyBoxChat";
 import { request, url } from "../service";
@@ -16,7 +17,6 @@ const ChatBox = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSocketIo, setSocketIo] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  const [typing, setTyping] = useState(false);
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -56,6 +56,10 @@ const ChatBox = () => {
       ) {
         if (!notification.includes(newMessageRecieved)) {
           setNotification([newMessageRecieved, ...notification]);
+          localStorage.setItem(
+            "notification-chat",
+            JSON.stringify([newMessageRecieved, ...notification])
+          );
           setIsFetchChat((state) => !state);
         }
       } else {
@@ -82,8 +86,6 @@ const ChatBox = () => {
     }, timerLength);
   };
 
-  console.log({ notification });
-
   return (
     <>
       <div className="bg-white m-2 rounded-md pt-2 flex-1">
@@ -96,7 +98,7 @@ const ChatBox = () => {
                 onClick={() => setOpen(!open)}
               ></i>
             </div>
-            <div className="bg-slate-300 px-2 flex flex-col justify-between h-[81vh] w-full rounded-md overflow-hidden">
+            <div className="bg-slate-300 px-2 flex flex-col justify-between h-[82vh] w-full rounded-md overflow-hidden">
               <BodyBoxChat messages={messages} isLoading={isLoading} />
               {isTyping ? (
                 <div className="flex justify-center items-center p-2 gap-1 ml-2 bg-slate-200 rounded-xl w-8">
@@ -115,12 +117,22 @@ const ChatBox = () => {
             </div>
           </div>
         ) : (
-          <div className="text-center mt-[200px] text-[20px]">
+          <div className="text-center mt-[200px] text-[20px] h-[60vh]">
             Click into users or group chat to chat
           </div>
         )}
       </div>
-      {open && <ShowChatsModal setOpen={setOpen} />}
+      {open &&
+        onChat &&
+        (onChat.users.length > 2 ? (
+          <ShowChatsModal setOpen={setOpen} />
+        ) : (
+          <ProfileModal
+            user={onChat.users.filter((u) => u._id !== user._id)[0]}
+            setOpen={setOpen}
+            isUser={false}
+          />
+        ))}
     </>
   );
 };

@@ -16,7 +16,9 @@ const ShowChatsModal = ({ setOpen, isCreateChat }) => {
   const [searchUser, setSearchUser] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [resultSearchUser, setResultSearchUser] = useState([]);
-  const [selectUser, setSelectUser] = useState([]);
+  const [selectUser, setSelectUser] = useState(
+    isCreateChat ? [] : onChat.users.filter((u) => u._id !== user._id)
+  );
 
   const fetchUser = async () => {
     try {
@@ -126,7 +128,13 @@ const ShowChatsModal = ({ setOpen, isCreateChat }) => {
         );
         if (data.message === "ok") {
           setOpen(false);
+          handleToast(toast.success, "Update users successfully");
           setIsFetchChat((state) => !state);
+        } else {
+          handleToast(
+            toast.warn,
+            "Must is be admin can update user in the group"
+          );
         }
       } catch (err) {
         console.error(err);
@@ -139,7 +147,7 @@ const ShowChatsModal = ({ setOpen, isCreateChat }) => {
   return (
     <div className="absolute top-0 left-0 right-0 bottom-0">
       <Modal setOpen={setOpen} />
-      <div className="absolute w-[400px] mx-auto bg-white mt-[100px] transform-translate z-30 box-shadow rounded-md">
+      <div className="absolute w-[300px] md:w-[400px] mx-auto bg-white mt-[100px] transform-translate z-30 box-shadow rounded-md">
         <div className="p-2 px-4 flex flex-col items-center relative">
           <span
             className="absolute right-6 top-2 opacity-50 cursor-pointer"
@@ -155,12 +163,12 @@ const ShowChatsModal = ({ setOpen, isCreateChat }) => {
               type="text"
               placeholder="Chat name"
               onChange={(e) => setChatName(e.target.value)}
-              className="px-2 py-1 border-[1px] border-slate-300 rounded-sm outline-none my-2 w-full"
+              className="px-2 text-[12px] md:text-[15px] py-[3px] md:py-1 border-[1px] border-slate-300 rounded-sm outline-none my-2 w-full"
               value={chatName}
             />
             {!isCreateChat && (
               <button
-                className="bg-orange-400 px-2 rounded-md h-[36px] text-white"
+                className="bg-orange-400 px-2 rounded-md h-[26px] md:h-[36px] text-[12px] md:text-[15px] text-white"
                 onClick={handleUpdateChatName}
               >
                 Update
@@ -171,12 +179,12 @@ const ShowChatsModal = ({ setOpen, isCreateChat }) => {
             <input
               type="text"
               placeholder="Add users eg: Jockes Abel Anna ..."
-              className="px-2 py-1 border-[1px] border-slate-300 rounded-sm outline-none my-2 w-full"
+              className="px-2 text-[12px] md:text-[15px] py-[3px] md:py-1 border-[1px] border-slate-300 rounded-sm outline-none my-2 w-full"
               onChange={(e) => setSearchUser(e.target.value)}
             />
             {!isCreateChat && (
               <button
-                className="bg-green-500 px-2 rounded-md h-[36px] text-white"
+                className="bg-green-500 px-2 rounded-md text-white h-[26px] md:h-[36px] text-[12px] md:text-[15px]"
                 onClick={handleUpdateUser}
               >
                 Update
@@ -205,7 +213,7 @@ const ShowChatsModal = ({ setOpen, isCreateChat }) => {
             </span>
           )}
           <button
-            className="text-white p-2 rounded-xl self-end mt-2"
+            className="text-white p-1 md:p-2 text-[13px] md:text-[16px] rounded-xl self-end mt-2"
             onClick={isCreateChat ? handleCreateGroupChat : handleLeaveGroup}
             style={{
               background: !isCreateChat ? "rgb(239 68 68)" : "rgb(34 197 94)",

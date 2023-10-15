@@ -11,7 +11,7 @@ import { ChatState } from "../store/ChatProvider";
 const BodyBoxChat = ({ messages, isLoading }) => {
   const { user } = ChatState();
   return (
-    <div className="p-2 relative max-h-[480px] mb-4">
+    <div className="p-2 relative h-[480px] mb-4">
       {isLoading ? (
         <div className="absolute animate-bounce w-6 h-6 top-[200px] left-[50%]">
           <i className="fas fa-download text-[32px] text-slate-500"></i>
@@ -31,7 +31,7 @@ const BodyBoxChat = ({ messages, isLoading }) => {
                     />
                   )}
                   <span
-                    className="py-1 px-2 rounded-md my-1"
+                    className="py-1 px-2 rounded-md my-1 max-w-md"
                     style={{
                       backgroundColor: `${
                         m.sender._id === user._id ? "#bee3f8" : "#b9f5d0"

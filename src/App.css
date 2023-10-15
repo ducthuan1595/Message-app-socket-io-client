@@ -48,7 +48,7 @@ body::-webkit-scrollbar {
   content     : '';
   border-style: solid;
   border-width: 20px 27px;
-  border-color: transparent transparent white transparent;
+  border-color: transparent transparent transparent transparent;
   right       : 60px;
   top         : 0;
 }

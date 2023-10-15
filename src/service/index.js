@@ -1,5 +1,6 @@
 import axios from "axios";
-export const url = "http://localhost:5000";
+// export const url = "http://localhost:5000";
+export const url = process.env.REACT_APP_API_URL;
 
 export const request = {
   fetchChats: (token) => {
@@ -14,6 +15,16 @@ export const request = {
   },
   signup: (...data) => {
     return axios.post(`${url}/signup`, ...data);
+  },
+  updateUser: (value, token) => {
+    return axios.post(`${url}/edit-user`, value, {
+      validateStatus: (status) => {
+        return status < 500;
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 
   searchUser: (key, token) => {

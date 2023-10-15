@@ -5,7 +5,7 @@ import ListUser from "../ListUser";
 import { ChatState } from "../../store/ChatProvider";
 
 export const SearchUserModal = ({ setOpen }) => {
-  const { token, setChat } = ChatState();
+  const { token, setChat, setIsFetchChat } = ChatState();
 
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -32,8 +32,9 @@ export const SearchUserModal = ({ setOpen }) => {
       if (token) {
         const { data } = await request.createChat({ userId }, token);
         if (data.message === "ok") {
-          setChat((state) => [...state, data.data]);
+          setIsFetchChat((state) => !state);
           setOpen(false);
+          // setChat((state) => [...state, data.data]);
         }
       }
     } catch (err) {
@@ -54,7 +55,7 @@ export const SearchUserModal = ({ setOpen }) => {
   };
 
   return (
-    <div className="absolute w-[100wh] h-full bottom-0">
+    <div className="absolute w-[100wh] z-20 h-full bottom-0">
       <div className="bg-white left-0 h-[100vh] px-2  w-[300px] box-shadow transform-search">
         <div
           className="border-b-[1px] border-[#dddddd]"
@@ -81,7 +82,7 @@ export const SearchUserModal = ({ setOpen }) => {
         <div className="flex flex-col gap-2 p-2 items-center">
           {!isLoading ? (
             searchResult &&
-            searchResult.map((user) => {
+            searchResult.slice(0, 7).map((user) => {
               return (
                 <ListUser
                   key={user._id}

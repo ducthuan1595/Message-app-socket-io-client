@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 const userStore = JSON.parse(localStorage.getItem("user-chat")) ?? null;
 const tokenStore = JSON.parse(localStorage.getItem("token-chat")) ?? null;
+const notificationStore =
+  JSON.parse(localStorage.getItem("notification-chat")) ?? [];
 
 const ChatContext = createContext();
 
@@ -14,7 +16,8 @@ const ChatProvider = ({ children }) => {
   const [chat, setChat] = useState([]);
   const [onChat, setOnChat] = useState(null);
   const [isFetchChat, setIsFetchChat] = useState(false);
-  const [notification, setNotification] = useState([]);
+  const [isOpenMyChat, setOpenMyChat] = useState(false);
+  const [notification, setNotification] = useState(notificationStore);
 
   useEffect(() => {
     if (!user || !token) {
@@ -35,6 +38,8 @@ const ChatProvider = ({ children }) => {
     setIsFetchChat,
     notification,
     setNotification,
+    isOpenMyChat,
+    setOpenMyChat,
   };
 
   return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>;

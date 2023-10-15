@@ -11,10 +11,10 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        {/* <Route path="/" element={<HomePage />} /> */}
         <Route path="/login" element={<FormPage />} />
         <Route path="/signup" element={<FormPage />} />
-        <Route path="/chat" element={<ChatsPage />} />
+        <Route path="/" element={<ChatsPage />} />
       </Routes>
 
       <ToastContainer />
