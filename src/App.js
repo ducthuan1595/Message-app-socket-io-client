@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import ChatsPage from "./pages/Chats";
 import FormPage from "./pages/Form";
+import CheckOutlet from "./config/checkOutlet";
 import "./App.css";
 
 function App() {
@@ -11,8 +12,10 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/login" element={<FormPage />} />
-        <Route path="/signup" element={<FormPage />} />
-        <Route path="/" element={<ChatsPage />} />
+        <Route element={<CheckOutlet />}>
+          <Route path="/signup" element={<FormPage />} />
+          <Route path="/" element={<ChatsPage />} />
+        </Route>
       </Routes>
 
       <ToastContainer />
