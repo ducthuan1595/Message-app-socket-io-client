@@ -53,7 +53,7 @@ const FormPage = () => {
             localStorage.setItem("user-chat", JSON.stringify(res.data.data));
             localStorage.setItem("token-chat", JSON.stringify(res.data.token));
             setErrorMessage("");
-            navigate("/");
+            navigate("/chat");
           }
         } catch (err) {
           setErrorMessage(err.response.data.message);
