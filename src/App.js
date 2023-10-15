@@ -4,21 +4,19 @@ import "react-toastify/dist/ReactToastify.css";
 
 import ChatsPage from "./pages/Chats";
 import FormPage from "./pages/Form";
-import CheckOutlet from "./config/checkOutlet";
 import "./App.css";
 import { ChatState } from "./store/ChatProvider";
 
 function App() {
   const { user, token } = ChatState();
+  console.log(user);
   return (
     <div className="App">
-      {!user && !token && <Navigate to="/login" replace={true} />}
+      {!user && !token && <Navigate to="/" replace={true} />}
       <Routes>
-        <Route path="/login" element={<FormPage />} />
-        <Route element={<CheckOutlet />}>
-          <Route path="/signup" element={<FormPage />} />
-          <Route path="/" element={<ChatsPage />} />
-        </Route>
+        <Route path="/" element={<FormPage />} />
+        <Route path="/signup" element={<FormPage />} />
+        <Route path="/chat" element={<ChatsPage />} />
       </Routes>
 
       <ToastContainer />
