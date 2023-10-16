@@ -6,7 +6,7 @@ import ListUser from "./ListUser";
 import ShowChatsModal from "./slides/ShowChatsModal";
 
 const MyChat = () => {
-  const { chat, setOnChat, user, isOpenMyChat } = ChatState();
+  const { chat, setOnChat, user, isOpenMyChat, setOpenMyChat } = ChatState();
 
   const [openCreateGroup, setOpenCreateGroup] = useState(false);
   const [nameChat, setNameChat] = useState("");
@@ -14,6 +14,7 @@ const MyChat = () => {
   const handleChat = (chat) => {
     setOnChat(chat);
     setNameChat(chat._id);
+    setOpenMyChat(false);
   };
 
   return (
@@ -25,7 +26,9 @@ const MyChat = () => {
 
             <button
               className="bg-slate-300 px-2 py-1 rounded-md"
-              onClick={() => setOpenCreateGroup(true)}
+              onClick={() => {
+                setOpenCreateGroup(true);
+              }}
             >
               New Group Chat
               <i className="fas fa-plus ml-2"></i>
