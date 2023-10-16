@@ -13,7 +13,7 @@ const MyChat = () => {
 
   const handleChat = (chat) => {
     setOnChat(chat);
-    setNameChat(chat.chatName);
+    setNameChat(chat._id);
   };
 
   return (
@@ -41,10 +41,8 @@ const MyChat = () => {
                     className="bg-slate-300 p-2 my-2 rounded-md hover:text-white hover:bg-green-600 cursor-pointer flex gap-2"
                     onClick={() => handleChat(c)}
                     style={{
-                      backgroundColor: `${
-                        nameChat === c.chatName ? "#22c55e" : ""
-                      }`,
-                      color: `${nameChat === c.chatName ? "#fff" : ""}`,
+                      backgroundColor: `${nameChat === c._id ? "#22c55e" : ""}`,
+                      color: `${nameChat === c._id ? "#fff" : ""}`,
                     }}
                   >
                     <div className="flex flex-wrap w-[60px] items-center justify-center">
@@ -69,7 +67,13 @@ const MyChat = () => {
                         </span>
                       )}
                     </div>
-                    <div>{c.chatName}</div>
+                    <div>
+                      {c.users.length > 2
+                        ? c.chatName
+                        : c.users.filter(
+                            (u) => u._id.toString() !== user._id.toString()
+                          )[0].name}
+                    </div>
                   </div>
                 );
               })}
@@ -100,10 +104,8 @@ const MyChat = () => {
                   className="bg-slate-300 p-2 my-2 rounded-md hover:text-white hover:bg-green-600 cursor-pointer flex gap-2"
                   onClick={() => handleChat(c)}
                   style={{
-                    backgroundColor: `${
-                      nameChat === c.chatName ? "#22c55e" : ""
-                    }`,
-                    color: `${nameChat === c.chatName ? "#fff" : ""}`,
+                    backgroundColor: `${nameChat === c._id ? "#22c55e" : ""}`,
+                    color: `${nameChat === c._id ? "#fff" : ""}`,
                   }}
                 >
                   <div className="flex flex-wrap w-[60px] items-center justify-center">
@@ -128,7 +130,13 @@ const MyChat = () => {
                       </span>
                     )}
                   </div>
-                  <div>{c.chatName}</div>
+                  <div>
+                    {c.users.length > 2
+                      ? c.chatName
+                      : c.users.filter(
+                          (u) => u._id.toString() !== user._id.toString()
+                        )[0].name}
+                  </div>
                 </div>
               );
             })}

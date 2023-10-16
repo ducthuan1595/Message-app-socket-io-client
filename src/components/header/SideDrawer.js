@@ -44,7 +44,7 @@ const SideDrawer = () => {
     setToken(null);
     localStorage.removeItem("user-chat");
     localStorage.removeItem("token-chat");
-    navigate("/login");
+    navigate("/");
   };
 
   console.log({ user });

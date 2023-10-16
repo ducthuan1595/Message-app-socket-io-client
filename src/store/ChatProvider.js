@@ -21,7 +21,7 @@ const ChatProvider = ({ children }) => {
 
   useEffect(() => {
     if (!user || !token) {
-      navigate("/login");
+      navigate("/");
     }
   }, [user]);
 

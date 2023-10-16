@@ -107,7 +107,7 @@ const FormPage = () => {
               }}
               onClick={() => {
                 setIsLogin(true);
-                navigate("/login");
+                navigate("/");
               }}
             >
               Login
